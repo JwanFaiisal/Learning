@@ -9,7 +9,8 @@ import SwiftUI
 
 class UpdateViewModel: ObservableObject {
     @Published var learningGoal: LearningGoalModel
-    
+    @Published var navigateToHome: Bool = false // التحكم في التنقل
+
     init() {
         self.learningGoal = LearningGoalModel(learning: "", selectedOption: "Month")
     }
@@ -21,4 +22,10 @@ class UpdateViewModel: ObservableObject {
     func updateSelectedOption(_ option: String) {
         learningGoal.selectedOption = option
     }
+    
+    func startLearning() {
+        navigateToHome = true
+    }
+    
+    
 }

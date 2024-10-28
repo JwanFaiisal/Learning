@@ -9,7 +9,8 @@ class HomeViewModel: ObservableObject {
     @Published var circleColor: Color = .clear
     
     private var calendar = Calendar.current
-    
+    private var originalFreezesUsed: Int? // المتغير الجديد لحفظ القيمة الأصلية لـ freezesUsed
+
     // Function to log "Learned Today" with condition
     func logTodayAsLearned() {
         homeModel.todayLearned.toggle()
@@ -28,18 +29,22 @@ class HomeViewModel: ObservableObject {
     func freezeDay() {
         if !homeModel.todayLearned, homeModel.freezesUsed < homeModel.maxFreezes {
             homeModel.freezeLearned = true
+            originalFreezesUsed = homeModel.freezesUsed // حفظ القيمة الأصلية قبل التجميد
             homeModel.freezesUsed += 1
             circleColor = Color.blue.opacity(0.4)
-            homeModel.previousFreezesUsed = homeModel.freezesUsed
         }
     }
     
     // Reset freeze if freeze condition is canceled
     func resetFreeze() {
-        homeModel.freezeLearned = false
-        homeModel.todayLearned = false
-        circleColor = .clear
-        homeModel.freezesUsed = homeModel.previousFreezesUsed
+        if homeModel.freezeLearned {
+            homeModel.freezeLearned = false
+            homeModel.todayLearned = false
+            circleColor = .clear
+            if let originalValue = originalFreezesUsed {
+                homeModel.freezesUsed = originalValue // استعادة القيمة الأصلية عند إلغاء التجميد
+            }
+        }
     }
     
     // Check if a date is in the future

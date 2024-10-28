@@ -120,9 +120,11 @@ struct ContentView: View {
                     .cornerRadius(10)
                 }
                 .padding(.top, 450)
-                .background(NavigationLink(destination: homeScreen(language: viewModel.learningModel.title), isActive: $viewModel.navigateToHome) { EmptyView() }) // View
             }
-        }
+                .background(NavigationLink(destination: HomeView(language: viewModel.learningModel.title), isActive: $viewModel.navigateToHome) { EmptyView() }) // View
+            
+        }        .navigationBarBackButtonHidden(true)
+
     }
 }
 

@@ -12,7 +12,7 @@ class LearnerViewModel: ObservableObject {
     
     //1
     @Published var learningModel: LearningModel
-    @Published var navigateToHome: Bool = false // التحكم في التنقل
+    @Published var navigateToHome: Bool = false 
     
     init() {
         self.learningModel = LearningModel(title: "", selectedOption: "Month")

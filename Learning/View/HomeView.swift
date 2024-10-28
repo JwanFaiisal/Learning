@@ -63,9 +63,24 @@ struct HomeView: View {
                                 Image(systemName: "chevron.right")
                                     .foregroundColor(.orange)
                             }
+                            
+                            
                         }
                     }
                     .padding()
+                    
+                    HStack(spacing: 20) {
+                        ForEach(0..<7) { day in
+                            VStack {
+                                Text(getDayOfWeek(day: day))
+                                    .foregroundColor(.gray)
+                                
+                            }
+                        }
+                        
+                    }
+                    
+                    
                     
                     let daysOfWeek = viewModel.generateDaysForWeek(for: viewModel.selectedDate)
                     let columns = Array(repeating: GridItem(.flexible()), count: 7)
@@ -87,6 +102,8 @@ struct HomeView: View {
                             .disabled(viewModel.isFuture(date: day))
                         }
                     }
+                    
+                    
                     
                     Rectangle()
                         .frame(width: 380, height: 1)
@@ -125,23 +142,23 @@ struct HomeView: View {
                 .padding(.top, -260)
                 
                 VStack {
-                    Button(action: {
-                        if viewModel.homeModel.freezeLearned {
-                            viewModel.resetFreeze()
-                        } else {
-                            viewModel.logTodayAsLearned()
-                        }
-                    }) {
-                        Text(viewModel.homeModel.todayLearned ? "Learned Today" : "Log today as Learned")
-                            .font(.title2)
-                            .bold()
-                            .frame(width: 250, height: 250)
-                            .background(viewModel.homeModel.todayLearned ? Color.orange.opacity(0.4) : (viewModel.homeModel.freezeLearned ? Color.blue.opacity(0.4) : Color.orange))
-                            .cornerRadius(125)
-                            .foregroundColor(viewModel.homeModel.todayLearned ? Color.orange : Color.black)
-                    }
-                    .padding(.top, 290)
-                }
+                                  Button(action: {
+                                      if viewModel.homeModel.freezeLearned {
+                                          viewModel.resetFreeze()
+                                      } else {
+                                          viewModel.logTodayAsLearned()
+                                      }
+                                  }) {
+                                      Text(viewModel.homeModel.freezeLearned ? "Day Frozen" : (viewModel.homeModel.todayLearned ? "Learned Today" : "Log today as Learned"))
+                                          .font(.title2)
+                                          .bold()
+                                          .frame(width: 250, height: 250)
+                                          .background(viewModel.homeModel.freezeLearned ? Color.blue.opacity(0.4) : (viewModel.homeModel.todayLearned ? Color.orange.opacity(0.4) : Color.orange))
+                                          .cornerRadius(125)
+                                          .foregroundColor(viewModel.homeModel.todayLearned || viewModel.homeModel.freezeLearned ? Color.black : Color.black)
+                                  }
+                                  .padding(.top, 290)
+                              }
                 
                 VStack {
                     Button(action: {
@@ -181,8 +198,17 @@ struct HomeView: View {
         formatter.dateFormat = "d"
         return formatter
     }
+    
+    
+
+    
+    func getDayOfWeek(day: Int) -> String {
+        let daysOfWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
+        return daysOfWeek[day % 7]
+    }
+
 }
 
 #Preview {
-    HomeView(language: "English")
+    HomeView(language: "")
 }
