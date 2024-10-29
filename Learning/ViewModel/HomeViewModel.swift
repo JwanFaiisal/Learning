@@ -29,7 +29,7 @@ class HomeViewModel: ObservableObject {
     func freezeDay() {
         if !homeModel.todayLearned, homeModel.freezesUsed < homeModel.maxFreezes {
             homeModel.freezeLearned = true
-            originalFreezesUsed = homeModel.freezesUsed // حفظ القيمة الأصلية قبل التجميد
+            originalFreezesUsed = homeModel.freezesUsed
             homeModel.freezesUsed += 1
             circleColor = Color.blue.opacity(0.4)
         }
@@ -42,7 +42,7 @@ class HomeViewModel: ObservableObject {
             homeModel.todayLearned = false
             circleColor = .clear
             if let originalValue = originalFreezesUsed {
-                homeModel.freezesUsed = originalValue // استعادة القيمة الأصلية عند إلغاء التجميد
+                homeModel.freezesUsed = originalValue // 
             }
         }
     }

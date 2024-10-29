@@ -7,13 +7,10 @@
 
 import Foundation
 
-
-
+// Model structure for learning data
 struct LearningModel {
-    
-    //1
+    // Title of the learning subject
     var title: String
+    // Selected option for the duration of learning (e.g., Week, Month, Year)
     var selectedOption: String
-    
-    
 }
